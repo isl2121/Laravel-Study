@@ -3,9 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Events\Dispatche;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-
 class EventServiceProvider extends ServiceProvider
+
 {
     /**
      * The event listener mappings for the application.
@@ -13,10 +14,13 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
-        ],
-    ];
+		\App\Events\ArticlesEvent::class => [
+			\App\Listeners\ArticlesEventListener::class,	
+		],
+		\Illuminate\Auth\Events\Login::class=> [
+			\App\Listeners\UsersEvenetListener::class	
+		],
+	];
 
     /**
      * Register any events for your application.
@@ -26,7 +30,10 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
+        
+        \Event::listen(
+			'article.created',
+			\App\Listeners\ArticlesEventiListner::class
+		);
     }
 }

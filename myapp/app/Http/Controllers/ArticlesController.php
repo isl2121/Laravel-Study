@@ -13,7 +13,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-       $articles = \App\Article::latest()->paginate(2);
+       $articles = \App\Article::latest()->paginate(10);
        
        //latest() = 쿼리 결과 날짜 역순으로 정렬하는 도우미 메서드다. orderby('created_at', 'desc') 와 같다.
 	   //paginate(int $perpage = null) 은 한페이지당 몇개의 메서드를 표시할지다.
@@ -103,7 +103,8 @@ class ArticlesController extends Controller
 	    }
 	    
 	    var_dump('이벤트를 던집니다.');
-	    event('article.created', [$article]);
+	    // event('article.created', [$article]);
+		event(new \App\Events\ArticlesEvent($article));
 	    var_dump('이벤트를 던졌습니다.');
 	    /*-------------------------------------------------------------------------------------------------------------
 			성공적으로 등록이 끝났을때 이동한다.

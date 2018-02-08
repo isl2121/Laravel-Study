@@ -36,10 +36,12 @@ Route::get('auth/login', function(){
 
 });
 
+
 Event::listen('article.created', function ($article){
 	var_dump('이벤트를 받았습니다. 받은 데이터의 상태는 다음과 같습니다.');
 	var_dump($article->toArray());
 });
+
 /*
 Route::get('protected', function(){
 	dump(session()->all());
