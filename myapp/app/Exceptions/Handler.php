@@ -48,6 +48,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+	    //app()->environment('production') 현재 환경설정을 가져온다 지금 환경설정이 같으면 true를 반환한다.
+	    
+	    if (app()->environment('production')) {
+		    //
+		    if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+			    return response(view('errors.notice',[
+				    'title' => '찾을수 없습니다.',
+				    'description' => '죄송합니다! 요청하신 페이지가 없습니다.'
+			    ]), 404);
+		    }
+	    }
         return parent::render($request, $exception);
     }
 }
