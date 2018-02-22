@@ -93,6 +93,12 @@ Route::get('mail' ,function(){
 });
 
 
+Route::get('docs/{file?}', function($file = null){
+	$text = (new App\Documentation)->get($file);
+	
+	return app(ParsedownExtra::class)->text($text);
+});
+
 Route::resource('articles','ArticlesController');
 
 Auth::routes();
